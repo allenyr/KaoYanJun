@@ -1,8 +1,6 @@
 package com.sharon.allen.a18_sharon.activity;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -10,63 +8,48 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.sharon.allen.a18_sharon.R;
 import com.sharon.allen.a18_sharon.base.BaseActivity;
 import com.sharon.allen.a18_sharon.bean.UserDataManager;
 import com.sharon.allen.a18_sharon.dao.UserSQLite;
 import com.sharon.allen.a18_sharon.globle.Constant;
-import com.sharon.allen.a18_sharon.model.HotItem;
 import com.sharon.allen.a18_sharon.model.User;
 import com.sharon.allen.a18_sharon.model.Version;
 import com.sharon.allen.a18_sharon.utils.LogUtils;
 import com.sharon.allen.a18_sharon.utils.MyJPush;
 import com.sharon.allen.a18_sharon.utils.MyOkHttp;
 import com.sharon.allen.a18_sharon.utils.MySharePreference;
-import com.sharon.allen.a18_sharon.utils.SystemBarTintUtils;
 import com.sharon.allen.a18_sharon.utils.ToastUtils;
 
-import java.io.BufferedWriter;
 import java.io.File;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,7 +96,7 @@ public class SplashActivity extends BaseActivity {
                 case LOGIN:
                     if("登录成功".equals((String) msg.obj)){
                         //查询服务器个人数据
-                        queryPersonInfoFromServer(userDataManager.getPhone());
+                        getPersonDataFromServer(userDataManager.getPhone());
                     }
                     else{
                         ToastUtils.Toast(mContext,(String) msg.obj);
@@ -136,14 +119,12 @@ public class SplashActivity extends BaseActivity {
                     break;
                 //个人数据
                 case AUTO_LOGIN_SUCCESS:
-                    SQLiteDatabase sqLiteDatabase = userSQLite.getWritableDatabase();
+//                    SQLiteDatabase sqLiteDatabase = userSQLite.getWritableDatabase();
                     jsonData = (String) msg.obj;
-
                     MySharePreference.putSP(mContext,"personalCache",jsonData);
                     userList = pullJson(jsonData);
-                    saveuserData(userList);
-
-                    personInfoSaveToSQLite(jsonData,sqLiteDatabase,mContext);
+                    saveUserData(userList);
+//                    personInfoSaveToSQLite(jsonData,sqLiteDatabase,mContext);
                     enterMainActivity();
                     break;
                 //网络异常
@@ -246,7 +227,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     //查询MYSQL获取个人信息
-    public void queryPersonInfoFromServer(String username){
+    public void getPersonDataFromServer(String username){
         ArrayList list = new ArrayList();
         list.add(username);
         myOkHttp.postAsynHttp(handler,AUTO_LOGIN_SUCCESS,Constant.Server.GET_PATH,list,3);
@@ -380,8 +361,6 @@ public class SplashActivity extends BaseActivity {
 
     //自动登录
     private void autoLogin(){
-//        SharedPreferences sharedPreferences = getSharedPreferences("info",MODE_PRIVATE);
-//        boolean autoLoginBit = sharedPreferences.getBoolean("autologin",false);
         boolean autoLoginBit = MySharePreference.getSP(mContext,"autologin",false);
         if(autoLoginBit){
             ArrayList<String> list = new ArrayList<String>();
@@ -531,7 +510,7 @@ public class SplashActivity extends BaseActivity {
         return null;
     }
 
-    private void saveuserData(List<User> list){
+    private void saveUserData(List<User> list){
         for(User user:list) {
             userDataManager.setId(user.getId());
             userDataManager.setUsername(user.getUsername());

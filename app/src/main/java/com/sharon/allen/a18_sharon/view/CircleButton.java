@@ -4,30 +4,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
+import android.widget.TextView;
 
 import com.sharon.allen.a18_sharon.R;
-import com.sharon.allen.a18_sharon.utils.ToastUtils;
 
 /**
  * Created by Allen on 2016/11/8.
  */
 
-public class ImageButton extends View {
+public class CircleButton extends TextView {
 
     private Paint mPaint;
-    private Paint mTextPaint;
     private static int WHITH;
     private static int HIGHT;
-    private static int mTextSize = 17;
     private static final String NAME_SPACE = "http://schemas.android.com/apk/res-auto";
     private int backgroundColor;
     private String text;
@@ -37,7 +30,7 @@ public class ImageButton extends View {
     //----------------------------------------------------------------------------
     //接口
     public interface OnStateListener{
-        public void onState(View view,String state);
+        public void onState(View view, String state);
     }
     //初始化接口变量
     private OnStateListener mListener = null;
@@ -47,12 +40,12 @@ public class ImageButton extends View {
     }
     //----------------------------------------------------------------------------
 
-    public ImageButton(Context context) {
+    public CircleButton(Context context) {
         super(context);
         initView();
     }
 
-    public ImageButton(Context context, AttributeSet attrs) {
+    public CircleButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
 
@@ -65,9 +58,6 @@ public class ImageButton extends View {
         WHITH = (int) typeArray.getDimension(R.styleable.ImageButton_layout_width,100);
         HIGHT = (int) typeArray.getDimension(R.styleable.ImageButton_layout_height,100);
 
-        mTextSize = (int) typeArray.getDimension(R.styleable.ImageButton_textSize,17);
-        mTextSize = sp2px(context,mTextSize);
-
         mPaint.setColor(backgroundColor);
         if (text == null){
             text = "";
@@ -76,7 +66,7 @@ public class ImageButton extends View {
         typeArray.recycle();
     }
 
-    public ImageButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CircleButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView();
     }
@@ -84,19 +74,14 @@ public class ImageButton extends View {
     private void initView() {
 
         mPaint = new Paint();
-        mTextPaint = new Paint();
         //画笔颜色
         mPaint.setColor(getResources().getColor(R.color.colorRed));
-        mTextPaint.setColor(getResources().getColor(R.color.colorWhite));
         // 设置alpha不透明度，范围为0~255
         mPaint.setAlpha(255);
-        mTextPaint.setAlpha(255);
         //设置画笔粗细
         mPaint.setStrokeWidth(10);
-        mTextPaint.setTextSize(mTextSize);
         // 是否抗锯齿
         mPaint.setAntiAlias(true);
-        mTextPaint.setAntiAlias(true);
     }
 
     //设置画布大大小
@@ -112,10 +97,9 @@ public class ImageButton extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawCircle(WHITH/2,HIGHT/2,WHITH/2,mPaint);
-//        canvas.drawText(text,WHITH/2-60,HIGHT/2+15,mTextPaint);
-        canvas.drawText(text,WHITH/2,HIGHT/2,mTextPaint);
+        super.draw(canvas);
         if (enable){
-            ImageButton.this.setOnClickListener(new OnClickListener() {
+            CircleButton.this.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     typeDialog();
@@ -156,14 +140,14 @@ public class ImageButton extends View {
                 switch (type){
                     case 0:
                         setUnsolved();
-                        mListener.onState(ImageButton.this,"未解决");
+                        mListener.onState(CircleButton.this,"未解决");
                         break;
                     case 1:
                         setsolved();
-                        mListener.onState(ImageButton.this,"已解决");
+                        mListener.onState(CircleButton.this,"已解决");
                         break;
                     case 2:
-                        mListener.onState(ImageButton.this,"删除");
+                        mListener.onState(CircleButton.this,"删除");
                         break;
                 }
                 dialog.dismiss();
@@ -171,10 +155,4 @@ public class ImageButton extends View {
         });
         builder.show();
     }
-
-    public int sp2px(Context context, float spValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (spValue * fontScale + 0.5f);
-    }
-
 }

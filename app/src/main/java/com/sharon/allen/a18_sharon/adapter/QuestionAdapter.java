@@ -183,7 +183,7 @@ public class QuestionAdapter extends RecyclerView.Adapter {
         public TextView tv_question_time;
         public ImageView iv_question_sex;
         public TextView tv_question_replycount;
-        public ImageButton iv_question_type;
+        public TextView iv_question_type;
         public ImageView iv_question_share;
         public View rootView;
         public int position;
@@ -196,7 +196,7 @@ public class QuestionAdapter extends RecyclerView.Adapter {
             tv_question_content = (TextView) itemView.findViewById(R.id.tv_question_content);
             tv_question_replycount = (TextView) itemView.findViewById(R.id.tv_question_replycount);
             iv_question_sex = (ImageView) itemView.findViewById(R.id.iv_question_sex);
-            iv_question_type = (ImageButton) itemView.findViewById(R.id.iv_question_type);
+            iv_question_type = (TextView) itemView.findViewById(R.id.iv_question_type);
             iv_question_share = (ImageView) itemView.findViewById(R.id.iv_question_share);
             rootView = itemView.findViewById(R.id.rootview_question);
             rootView.setOnClickListener(this);
@@ -249,6 +249,32 @@ public class QuestionAdapter extends RecyclerView.Adapter {
                 message.arg1 = type;
                 message.arg2 = position;
                 handler.sendMessage(message);
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    private void typeDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("类型");
+        final String[] type = {"未解决", "已解决","删除"};
+        builder.setSingleChoiceItems(type, 0, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int type)
+            {
+                switch (type){
+                    case 0:
+                        setUnsolved();
+
+                        break;
+                    case 1:
+                        setsolved();
+                        break;
+                    case 2:
+                        break;
+                }
                 dialog.dismiss();
             }
         });

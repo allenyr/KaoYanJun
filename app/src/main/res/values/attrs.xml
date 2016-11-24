@@ -14,6 +14,7 @@
     <declare-styleable name="ImageButton">
         <attr name="backgroundColor" format="color"/>
         <attr name="text" format="string"/>
+        <attr name="textSize" format="dimension"/>
         <attr name="enable" format="boolean"/>
         <attr name="layout_width" format="dimension"/>
         <attr name="layout_height" format="dimension"/>

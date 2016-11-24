@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.sharon.allen.a18_sharon.R;
 import com.sharon.allen.a18_sharon.adapter.MainPagerAdapter;
@@ -43,6 +44,7 @@ public class MainActivity extends BaseActivity {
     private ImageView im_question;
     public static boolean questionInstantStart = false;
     public static boolean InformationInstantStart = false;
+    private long mExitTime;
 
     @Override
     public void initView() {
@@ -159,32 +161,40 @@ public class MainActivity extends BaseActivity {
 
         }
     }
-//    //按两次返回
+    //按两次返回
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                mExitTime = System.currentTimeMillis();
+            } else {
+//                finish();
+                backHome();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    //返回桌面
 //    @Override
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//
 //        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            if ((System.currentTimeMillis() - mExitTime) > 2000) {
-//                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-//                mExitTime = System.currentTimeMillis();
-//            } else {
-//                finish();
-//            }
+//            Intent home = new Intent(Intent.ACTION_MAIN);
+//            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            home.addCategory(Intent.CATEGORY_HOME);
+//            startActivity(home);
 //            return true;
 //        }
 //        return super.onKeyDown(keyCode, event);
 //    }
-    //返回桌面
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent home = new Intent(Intent.ACTION_MAIN);
-            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            home.addCategory(Intent.CATEGORY_HOME);
-            startActivity(home);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+    private boolean backHome(){
+        Intent home = new Intent(Intent.ACTION_MAIN);
+        home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        home.addCategory(Intent.CATEGORY_HOME);
+        startActivity(home);
+        return true;
     }
 
 }

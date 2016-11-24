@@ -71,6 +71,7 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
     private static final int QQ_LOGIN_ERROR = 2;
     private static final int QQ_LOGIN_CANCLE = 3;
     private UserDataManager userDataManager;
+    private List<User> userList = new ArrayList<User>();
     private MyOkHttp myOkHttp;
     private String phoneName = TimeUtils.getPhotoFileName();
     private File tempFile = new File(Environment.getExternalStorageDirectory()+Constant.SdCard.SAVE_AVATAR_PATH,phoneName);
@@ -85,7 +86,7 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
                 case LOGIN:
                     if("登录成功".equals((String) msg.obj)){
                         //查询服务器个人数据
-                        queryPersonInfoFromServer(handler,userDataManager.getPhone());
+                        getPersonDataFromServer(handler,userDataManager.getPhone());
                     }else {
                         dialog.dismiss();
                         MySharePreference.putSP(mContext,"autologin",false);
@@ -95,26 +96,21 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
 
                 //查询到服务器的个人数据
                 case LOGIN_SUCCESS:
-                    SQLiteDatabase sqLiteDatabase = userSQLite.getWritableDatabase();
+//                    SQLiteDatabase sqLiteDatabase = userSQLite.getWritableDatabase();
                     jsonData = (String) msg.obj;
                     if (jsonData.equals("assign")){
                         LogUtils.i("注册");
                         //下载头像到本地
                         myOkHttp.downLoadFile(userDataManager.getHeadUrl(),avatarDir,phoneName);
                         userDataManager.setHeadUrl("/head/"+phoneName);
-                        LogUtils.i("headURL="+"/head/"+phoneName);
                         //注册或者登陆
-                        ArrayList<String> list = new ArrayList<String>();
-                        list.add(userDataManager.getUsername());
-                        list.add("");
-                        list.add(userDataManager.getHeadUrl());
-                        list.add(userDataManager.getPhone());
-                        list.add(userDataManager.getSex());
-                        list.add(userDataManager.getAddress());
-                        myOkHttp.okhttpGet(handler,LOGIN_SUCCESS,Constant.Server.GET_PATH,list,47);
+                        register();
                     }else {
-                        LogUtils.i("登陆");
-                        personInfoSaveToSQLite(jsonData,sqLiteDatabase,mContext);
+                        jsonData = (String) msg.obj;
+                        MySharePreference.putSP(mContext,"personalCache",jsonData);
+                        userList = pullJson(jsonData);
+                        saveUserData(userList);
+//                        personInfoSaveToSQLite(jsonData,sqLiteDatabase,mContext);
                         dialog.dismiss();
                         MySharePreference.putSP(mContext,"autologin",true);
                         startActivity(new Intent(LoginActivity.this,MainActivity.class));
@@ -137,9 +133,6 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
             case QQ_LOGIN_DONE: {
                 // 成功
 //                Toast.makeText(mContext, "QQ授权成功", Toast.LENGTH_SHORT).show();
-                //修改headurl指向服务器
-//                userDataManager.setHeadUrl("/head/"+phoneName);
-                //注册或者登陆
                 ArrayList<String> list = new ArrayList<String>();
                 list.add(userDataManager.getUsername());
                 list.add("");
@@ -148,7 +141,6 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
                 list.add(userDataManager.getSex());
                 list.add(userDataManager.getAddress());
                 myOkHttp.okhttpGet(handler,LOGIN_SUCCESS,Constant.Server.GET_PATH,list,47);
-
                 loadingDialog();
             }
             break;
@@ -201,13 +193,11 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
         myOkHttp.setOnOkhttpListener(new MyOkHttp.OnOkhttpListener() {
             @Override
             public void onProgress(int progress) {
-//                pb_dialog_progress.setProgress(progress);
                 LogUtils.i("下载中progress="+progress);
             }
 
             @Override
             public void onSuccess(String msg) {
-//                downloadDialog.dismiss();
                 LogUtils.i("下载完成,存放在"+msg);
                 //下载的头像更新服务器
                 myOkHttp.upLoadFile(handler,tempFile,Constant.Server.UPLOAD_HEAD_URL);
@@ -215,8 +205,6 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
 
             @Override
             public void onError(String msg) {
-//                pb_dialog_progress.setProgress(0);
-//                downloadDialog.dismiss();
                 LogUtils.i("下载出错"+msg);
             }
         });
@@ -346,15 +334,54 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
         list.add(userDataManager.getPhone());
         list.add(userDataManager.getPassword());
         myOkHttp.okhttpGet(handler,LOGIN,Constant.Server.GET_PATH,list,1);
-//        MyHttp.creatHttpRequest(handler,LOGIN,userDataManager.getPhone(),userDataManager.getPassword(),1);
     }
 
     //查询MYSQL获取个人信息
-    public void queryPersonInfoFromServer(Handler handler,String username){
+    public void getPersonDataFromServer(Handler handler,String username){
         ArrayList<String> list = new ArrayList<String>();
         list.add(username);
         myOkHttp.okhttpGet(handler,LOGIN_SUCCESS,Constant.Server.GET_PATH,list,3);
 
+    }
+
+    public void register(){
+        //注册或者登陆
+        ArrayList<String> list = new ArrayList<String>();
+        list.add(userDataManager.getUsername());
+        list.add("");
+        list.add(userDataManager.getHeadUrl());
+        list.add(userDataManager.getPhone());
+        list.add(userDataManager.getSex());
+        list.add(userDataManager.getAddress());
+        myOkHttp.okhttpGet(handler,LOGIN_SUCCESS,Constant.Server.GET_PATH,list,47);
+    }
+
+    private List<User> pullJson(String jsonData) {
+        if (jsonData!=null&&!jsonData.isEmpty()){
+            try {
+                Gson gson = new Gson();
+                return gson.fromJson(jsonData, new TypeToken<List<User>>() {}.getType());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private void saveUserData(List<User> list){
+        for(User user:list) {
+            userDataManager.setId(user.getId());
+            userDataManager.setUsername(user.getUsername());
+            userDataManager.setPassword(user.getPassword());
+            userDataManager.setHeadUrl(user.getHeadurl());
+            userDataManager.setPhone(user.getPhone());
+            userDataManager.setSex(user.getSex());
+            userDataManager.setAddress(user.getAddress());
+            userDataManager.setMoney(user.getMoney());
+            userDataManager.setSigna(user.getSigna());
+            userDataManager.setSigna(user.getSigna());
+            userDataManager.setMessagenum(user.getMessagenum());
+        }
     }
 
     //JSON数据存储到本机sql
