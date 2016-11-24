@@ -1,0 +1,1 @@
+include ':app', ':SMSSDK-2.1.1'

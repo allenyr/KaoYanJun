@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:allenyr="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_titlebar"/>
+
+    <ScrollView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.sharon.allen.a18_sharon.view.CircleImageView.CircleImageView
+                    android:id="@+id/civ_reply_activity_head"
+                    style="@style/Img_Head_Style"
+                    />
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tv_reply_activity_username"
+                            android:text="allen"
+                            style="@style/Text_Name_Style"
+                            />
+                        <ImageView
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/iv_reply_activity_sex"
+                            style="@style/Img_Sex_Style"
+                            />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_reply_activity_time"
+                        android:paddingTop="5dp"
+                        android:text="12-13 08:11"
+                        style="@style/Text_Time_Style"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <!--<ImageView-->
+                        <!--android:id="@+id/iv_reply_activity_type"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:layout_marginRight="20dp"-->
+                        <!--android:background="@drawable/ico_unsolved"-->
+                        <!--android:layout_width="60dp"-->
+                        <!--android:layout_height="30dp" />-->
+                    <com.sharon.allen.a18_sharon.view.ImageButton
+                        android:layout_marginRight="20dp"
+                        android:id="@+id/iv_reply_activity_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        allenyr:text="未解决"
+                        allenyr:backgroundColor="@color/colorRed"
+                        allenyr:enable="false"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:padding="10dp"
+                    android:text="沙发是的发送到"
+                    android:id="@+id/tv_reply_activity_content"
+                    style="@style/Text_Content_Style"
+                    />
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="-以下为回答列表-"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <com.sharon.allen.a18_sharon.utils.ChildListView
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/lv_reply_activity_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <EditText
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:hint="评论"
+            android:id="@+id/et_reply_activity_txt"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content" />
+
+        <Button
+            android:background="@drawable/selector_bt_pay"
+            android:text="发送"
+            android:layout_marginRight="10dp"
+            android:id="@+id/bt_reply_activity_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</LinearLayout>

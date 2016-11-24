@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_titlebar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.baoyz.widget.PullRefreshLayout
+                android:id="@+id/prl_friend_circle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:layout_weight="1"
+                    android:id="@+id/lv_hot"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </com.baoyz.widget.PullRefreshLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_friend_circle"
+                style="@style/FAB_Add_Style"
+                app:borderWidth="0dp"
+                app:fabSize="normal"
+                app:rippleColor="@color/colorGreen"
+                app:srcCompat="@drawable/ico_fab_add"
+                />
+
+        </RelativeLayout>
+
+        <!--<FrameLayout-->
+            <!--android:id="@+id/fl_friend_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+        <!--</FrameLayout>-->
+
+    </RelativeLayout>
+
+</LinearLayout>

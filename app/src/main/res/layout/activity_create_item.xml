@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorGrayLicht"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_titlebar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+        <EditText
+            android:background="@drawable/shape_et_empty_style"
+            android:id="@+id/et_creatitem_mood"
+            android:layout_height="match_parent"
+            style="@style/ET_Content_Style"
+            android:hint="这一刻的想法..."
+            android:lines="3"
+            android:paddingLeft="16dp"
+            />
+    </LinearLayout>
+
+    <View
+        android:background="@color/colorGrayLicht"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:background="@color/colorWhite"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:background="@drawable/ico_add_cycle"
+            android:id="@+id/iv_create_item_select"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_creatitem_pic"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/bt_creatitem_public"
+        style="@style/BT_Login_Style"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/selector_bt_login"
+        android:text="发送"
+        />
+</LinearLayout>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/rootview_moments"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.sharon.allen.a18_sharon.view.CircleImageView.CircleImageView
+            android:transitionName="share_head"
+            android:id="@+id/civ_moments_head"
+            style="@style/Img_Head_Style"
+            />
+
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_moments_username"
+                    android:text="allen"
+                    style="@style/Text_Name_Style"
+                    />
+                <ImageView
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/iv_moments_sex"
+                    style="@style/Img_Sex_Style"
+                     />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_moments_time"
+                android:paddingTop="5dp"
+                android:text="12-13 08:11"
+                style="@style/Text_Time_Style"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_moments_delete"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_action_delete"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:padding="10dp"
+        android:text="沙发是的发送到"
+        android:id="@+id/tv_moments_mood"
+        style="@style/Text_Content_Style"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp">
+        <ImageView
+            android:id="@+id/siv_moments_img"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="480dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:gravity="right"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                style="@style/Text_Count_Style"
+                android:text="评论"
+                android:layout_marginRight="10dp"
+                />
+            <TextView
+                style="@style/Text_Count_Style"
+                android:layout_marginRight="30dp"
+                android:id="@+id/tv_moments_comment"
+                android:text="0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                style="@style/Text_Count_Style"
+                android:text="赞"
+                android:textSize="15sp"
+                android:layout_marginRight="10dp" />
+            <TextView
+                style="@style/Text_Count_Style"
+                android:layout_marginRight="10dp"
+                android:id="@+id/tv_moments_thank"
+                android:text="0" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

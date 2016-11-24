@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_titlebar_head"/>
+
+    <ScrollView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:padding="10dp"
+                style="@style/Text_SettingTitle_Style"
+                android:text="基本信息"
+                />
+            <RelativeLayout
+                android:id="@+id/rl_person_username"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ffffff"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    style="@style/Text_SettingTitle_Style"
+                    android:layout_centerVertical="true"
+                    android:text="昵称"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_person_username"
+                    android:hint="昵称"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    style="@style/Text_SettingTitle_Style"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                />
+
+            <RelativeLayout
+                android:id="@+id/rl_person_sex"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ffffff"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    style="@style/Text_SettingTitle_Style"
+                    android:layout_centerVertical="true"
+                    android:text="性别"/>
+
+                <TextView
+                    android:id="@+id/tv_person_sex"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    style="@style/Text_SettingTitle_Style"
+                    android:hint="性别"/>
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                />
+
+            <RelativeLayout
+                android:id="@+id/rl_person_address"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ffffff"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    style="@style/Text_SettingTitle_Style"
+                    android:layout_centerVertical="true"
+                    android:text="地区"/>
+
+                <TextView
+                    android:id="@+id/tv_person_address"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    style="@style/Text_SettingTitle_Style"
+                    android:hint="地区"/>
+
+            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="24dp"
+                android:text="个性签名"
+                android:textColor="#808080"/>
+
+            <RelativeLayout
+                android:gravity="center_vertical"
+                android:layout_height="60dp"
+                android:layout_width="match_parent"
+                android:id="@+id/rl_person_signa"
+                android:background="#ffffff">
+                <TextView
+                    android:enabled="false"
+                    android:id="@+id/tv_person_signa"
+                    style="@style/Text_SettingTitle_Style"
+                    android:hint="介绍一下自己吧"
+                    android:layout_marginLeft="5dp"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <EditText
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:hint="私聊"
+            android:background="@drawable/shape_et_empty_style"
+            android:id="@+id/et_personal_chat"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content" />
+        <Button
+            android:text="发送"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_bt_pay"
+            android:id="@+id/bt_personal_public"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

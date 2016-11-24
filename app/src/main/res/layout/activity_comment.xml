@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_titlebar"/>
+
+    <ScrollView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.sharon.allen.a18_sharon.view.CircleImageView.CircleImageView
+                    android:id="@+id/civ_comment_activity_head"
+                    style="@style/Img_Head_Style"
+                     />
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tv_comment_activity_username"
+                            android:text="allen"
+                            style="@style/Text_Name_Style"
+                            />
+                        <ImageView
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/iv_comment_activity_sex"
+                            style="@style/Img_Sex_Style"
+                            />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_comment_activity_time"
+                        android:paddingTop="5dp"
+                        android:text="12-13 08:11"
+                        style="@style/Text_Time_Style"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:padding="10dp"
+                style="@style/Text_Content_Style"
+                android:text="沙发是的发送到"
+                android:id="@+id/tv_comment_activity_mood" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/iv_comment_activity_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:id="@+id/ll_thank"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_comment_activity_thank"
+                    android:background="@drawable/ico_like"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp" />
+                <TextView
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="点赞"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="-以下为评论列表-"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.sharon.allen.a18_sharon.utils.ChildListView
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/lv_comment_activity_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <EditText
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:hint="评论"
+            android:background="@drawable/shape_et_empty_style"
+            android:id="@+id/et_comment"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content" />
+
+        <Button
+            android:text="发送"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_bt_pay"
+            android:id="@+id/bt_comment_public"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+</LinearLayout>

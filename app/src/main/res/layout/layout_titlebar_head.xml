@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@color/colorAppStyle">
+    <RelativeLayout
+        android:visibility="invisible"
+        android:id="@+id/rl_headtitle_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:background="@drawable/titlebar_back_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:text="返回"
+            android:textColor="@color/colorBlack"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="35dp"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <com.sharon.allen.a18_sharon.view.CircleImageView.CircleImageView
+        android:transitionName="share_head"
+        android:id="@+id/civ_head"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/user_center_head_icon"
+        android:layout_width="100sp"
+        android:layout_height="100sp" />
+
+
+</RelativeLayout>

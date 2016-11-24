@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_titlebar"/>
+
+    <EditText
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:gravity="top"
+        android:lines="50"
+        android:id="@+id/et_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/number_shape"
+        android:hint="给我们留言"
+        android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/bt_feedback_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/shape_bt_login_normal"
+        android:text="发送"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp"/>
+</LinearLayout>
