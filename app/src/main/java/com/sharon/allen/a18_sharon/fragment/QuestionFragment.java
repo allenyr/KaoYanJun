@@ -115,9 +115,12 @@ public class QuestionFragment extends BaseFragment {
                             questionList.remove(questionPosition);
                             adapter.refresh(questionList);
                             break;
+                        case 3:
+                            break;
                     }
                     break;
                 case WHAT_QUESTION_TYPE_COMPLETE:
+                    adapter.notifyDataSetChanged();
                     LogUtils.i("修改成功");
                     break;
                 case WHAT_DELETE_COMPLETE:

@@ -29,9 +29,7 @@ import com.sharon.allen.a18_sharon.model.Question;
 import com.sharon.allen.a18_sharon.utils.LogUtils;
 import com.sharon.allen.a18_sharon.utils.ShareSdkUtils;
 import com.sharon.allen.a18_sharon.utils.TimeUtils;
-import com.sharon.allen.a18_sharon.utils.ToastUtils;
 import com.sharon.allen.a18_sharon.view.CircleImageView.CircleImageView;
-import com.sharon.allen.a18_sharon.view.ImageButton;
 
 import java.util.List;
 
@@ -102,12 +100,24 @@ public class QuestionAdapter extends RecyclerView.Adapter {
         LogUtils.i("hotItem.getSex()="+question.getSex());
 
         if(question.getType().equals("0")){
-            viewHolder.iv_question_type.setUnsolved();
+            viewHolder.iv_question_type.setText("未解決");
+            viewHolder.iv_question_type.setBackgroundResource(R.drawable.shape_circle_red_bg);
         }else if(question.getType().equals("1")){
-            viewHolder.iv_question_type.setsolved();
+            viewHolder.iv_question_type.setText("已解決");
+            viewHolder.iv_question_type.setBackgroundResource(R.drawable.shape_circle_green_bg);
         }else {
             viewHolder.iv_question_type.setVisibility(View.GONE);
         }
+        viewHolder.iv_question_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //修改类型
+                if (userDataManager.getId() == question.getUserid()||userDataManager.getId() == 377) {
+                    typeDialog(position);
+                }
+            }
+        });
+
         //显示时间
         String time = null;
         try {
@@ -125,27 +135,26 @@ public class QuestionAdapter extends RecyclerView.Adapter {
                 startPersonalData(question.getUserid(), viewHolder.civ_question_head);
             }
         });
-        //修改类型
-        if (userDataManager.getId() == question.getUserid()||userDataManager.getId() == 61) {
-            viewHolder.iv_question_type.setEnable(context,true);
-        }
-        viewHolder.iv_question_type.setOnStateListener(new ImageButton.OnStateListener() {
-            @Override
-            public void onState(View view, String state) {
-                Message message = handler.obtainMessage();
-                message.what = QuestionFragment.WHAT_QUESTION_TYPE;
-                if (state.equals("未解决")) {
-                    message.arg1 = 0;
-                } else if (state.equals("已解决")) {
-                    message.arg1 = 1;
-                } else {
-                    message.arg1 = 2;
-                }
-                message.arg2 = position;
-                handler.sendMessage(message);
-                ToastUtils.Toast(context,message.arg1);
-            }
-        });
+
+
+
+//        viewHolder.iv_question_type.setOnStateListener(new ImageButton.OnStateListener() {
+//            @Override
+//            public void onState(View view, String state) {
+//                Message message = handler.obtainMessage();
+//                message.what = QuestionFragment.WHAT_QUESTION_TYPE;
+//                if (state.equals("未解决")) {
+//                    message.arg1 = 0;
+//                } else if (state.equals("已解决")) {
+//                    message.arg1 = 1;
+//                } else {
+//                    message.arg1 = 2;
+//                }
+//                message.arg2 = position;
+//                handler.sendMessage(message);
+//                ToastUtils.Toast(context,message.arg1);
+//            }
+//        });
         //分享
         viewHolder.iv_question_share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,7 +247,7 @@ public class QuestionAdapter extends RecyclerView.Adapter {
     private void typeDialog(final int position){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("类型");
-        final String[] type = {"待解决", "已解决","删除"};
+        final String[] type = {"待解决", "已解决","删除","取消"};
         builder.setSingleChoiceItems(type, 0, new DialogInterface.OnClickListener()
         {
             @Override
@@ -252,32 +261,7 @@ public class QuestionAdapter extends RecyclerView.Adapter {
                 dialog.dismiss();
             }
         });
-        builder.show();
-    }
-
-    private void typeDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("类型");
-        final String[] type = {"未解决", "已解决","删除"};
-        builder.setSingleChoiceItems(type, 0, new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int type)
-            {
-                switch (type){
-                    case 0:
-                        setUnsolved();
-
-                        break;
-                    case 1:
-                        setsolved();
-                        break;
-                    case 2:
-                        break;
-                }
-                dialog.dismiss();
-            }
-        });
+        builder.setCancelable(false);
         builder.show();
     }
 

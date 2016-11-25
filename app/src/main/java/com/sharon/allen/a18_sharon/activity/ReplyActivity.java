@@ -19,20 +19,17 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sharon.allen.a18_sharon.R;
-import com.sharon.allen.a18_sharon.adapter.CommentAdapter;
 import com.sharon.allen.a18_sharon.adapter.ReplyAdapter;
 import com.sharon.allen.a18_sharon.base.BaseActivity;
 import com.sharon.allen.a18_sharon.bean.UserDataManager;
+import com.sharon.allen.a18_sharon.fragment.QuestionFragment;
 import com.sharon.allen.a18_sharon.globle.Constant;
-import com.sharon.allen.a18_sharon.model.Comment;
 import com.sharon.allen.a18_sharon.model.Reply;
-import com.sharon.allen.a18_sharon.utils.LogUtils;
 import com.sharon.allen.a18_sharon.utils.MyOkHttp;
 import com.sharon.allen.a18_sharon.utils.MySharePreference;
 import com.sharon.allen.a18_sharon.utils.SystemBarTintUtils;
 import com.sharon.allen.a18_sharon.utils.TimeUtils;
 import com.sharon.allen.a18_sharon.utils.ToastUtils;
-import com.sharon.allen.a18_sharon.view.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +57,7 @@ public class ReplyActivity extends BaseActivity {
     private TextView tv_reply_activity_time;
     private TextView tv_reply_activity_content;
     private ImageView iv_reply_activity_sex;
-    private ImageButton iv_reply_activity_type;
+    private TextView iv_reply_activity_type;
 
     private List<Reply> mReplyList = new ArrayList<>();
     private ReplyAdapter replyAdapter;
@@ -133,11 +130,13 @@ public class ReplyActivity extends BaseActivity {
                     break;
 
                 case WHAT_QUESTION_TYPE_COMPLETE:
+
                     ToastUtils.Toast(mContext,"修改成功");
                     break;
                 case WHAT_QUESTION_DELETE_COMPLETE:
                     finish();
                     break;
+
             }
         }
     };
@@ -157,7 +156,7 @@ public class ReplyActivity extends BaseActivity {
         tv_reply_activity_time = (TextView) findViewById(R.id.tv_reply_activity_time);
         tv_reply_activity_content = (TextView) findViewById(R.id.tv_reply_activity_content);
         iv_reply_activity_sex = (ImageView) findViewById(R.id.iv_reply_activity_sex);
-        iv_reply_activity_type = (ImageButton) findViewById(R.id.iv_reply_activity_type);
+        iv_reply_activity_type = (TextView) findViewById(R.id.iv_reply_activity_type);
         iv_reply_activity_type.setVisibility(View.VISIBLE);
         et_reply_activity_txt = (EditText) findViewById(R.id.et_reply_activity_txt);
         bt_reply_activity_send = (Button) findViewById(R.id.bt_reply_activity_send);
@@ -179,34 +178,11 @@ public class ReplyActivity extends BaseActivity {
         rl_titlebar_back.setOnClickListener(this);
         bt_reply_activity_send.setOnClickListener(this);
         civ_reply_activity_head.setOnClickListener(this);
-        iv_reply_activity_type.setOnStateListener(new ImageButton.OnStateListener() {
+        iv_reply_activity_type.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onState(View view, String state) {
-                ToastUtils.Toast(mContext,state);
-                ArrayList<String> list = new ArrayList<String>();
-                int type = 0;
-                if (state.equals("未解决")) {
-                    type = 0;
-                } else if (state.equals("已解决")) {
-                    type = 1;
-                } else {
-                    type = 2;
-                }
-                switch (type){
-                    case 0:
-                        list.add(type+"");
-                        list.add(mQuestionId+"");
-                        myOkHttp.okhttpGet(handler,WHAT_QUESTION_TYPE_COMPLETE,Constant.Server.GET_PATH,list,40);
-                        break;
-                    case 1:
-                        list.add(type+"");
-                        list.add(mQuestionId+"");
-                        myOkHttp.okhttpGet(handler,WHAT_QUESTION_TYPE_COMPLETE,Constant.Server.GET_PATH,list,40);
-                        break;
-                    case 2:
-                        list.add(mQuestionId+"");
-                        myOkHttp.okhttpGet(handler,WHAT_QUESTION_DELETE_COMPLETE,Constant.Server.GET_PATH,list,41);
-                        break;
+            public void onClick(View v) {
+                if (userDataManager.getId() == mReceiverId||userDataManager.getId() == 377){
+                    typeDialog();
                 }
             }
         });
@@ -229,10 +205,6 @@ public class ReplyActivity extends BaseActivity {
         mSex = bundle.getString("sex");
         mType = bundle.getString("type");
 
-        if (userDataManager.getId() == mReceiverId){
-            iv_reply_activity_type.setEnable(ReplyActivity.this,true);
-        }
-
         if(mSex.equals("男")){
             iv_reply_activity_sex.setBackgroundResource(R.drawable.ico_sex_male);
         }else if (mSex.equals("女")){
@@ -240,10 +212,13 @@ public class ReplyActivity extends BaseActivity {
         }else {
             iv_reply_activity_sex.setVisibility(View.GONE);
         }
+
         if(mType.equals("0")){
-            iv_reply_activity_type.setUnsolved();
+            iv_reply_activity_type.setText("未解決");
+            iv_reply_activity_type.setBackgroundResource(R.drawable.shape_circle_red_bg);
         }else if(mType.equals("1")){
-            iv_reply_activity_type.setsolved();
+            iv_reply_activity_type.setText("已解決");
+            iv_reply_activity_type.setBackgroundResource(R.drawable.shape_circle_green_bg);
         }else {
             iv_reply_activity_type.setVisibility(View.GONE);
         }
@@ -330,5 +305,45 @@ public class ReplyActivity extends BaseActivity {
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
+    }
+
+    private void typeDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("类型");
+        final String[] type = {"待解决", "已解决","删除","取消"};
+        builder.setSingleChoiceItems(type, 0, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int type)
+            {
+                ArrayList<String> okhttpParamList = new ArrayList<String>();
+                switch (type){
+                    case 0:
+                        iv_reply_activity_type.setText("未解決");
+                        iv_reply_activity_type.setBackgroundResource(R.drawable.shape_circle_red_bg);
+                        okhttpParamList.add(type+"");
+                        okhttpParamList.add(mQuestionId+"");
+                        myOkHttp.okhttpGet(handler,WHAT_QUESTION_TYPE_COMPLETE,Constant.Server.GET_PATH,okhttpParamList,40);
+                        break;
+                    case 1:
+                        iv_reply_activity_type.setText("已解決");
+                        iv_reply_activity_type.setBackgroundResource(R.drawable.shape_circle_green_bg);
+                        okhttpParamList.add(type+"");
+                        okhttpParamList.add(mQuestionId+"");
+                        myOkHttp.okhttpGet(handler,WHAT_QUESTION_TYPE_COMPLETE,Constant.Server.GET_PATH,okhttpParamList,40);
+                        break;
+                    case 2:
+                        okhttpParamList.add(mQuestionId+"");
+                        myOkHttp.okhttpGet(handler,WHAT_QUESTION_DELETE_COMPLETE,Constant.Server.GET_PATH,okhttpParamList,41);
+                        break;
+                    case 3:
+
+                        break;
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
     }
 }

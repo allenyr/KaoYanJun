@@ -57,29 +57,19 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:gravity="end"
-                    android:padding="10dp"
+                    android:gravity="right"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <!--<com.sharon.allen.a18_sharon.view.ImageButton-->
-                        <!--android:layout_marginRight="20dp"-->
-                        <!--android:id="@+id/iv_reply_activity_type"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--allenyr:text="未解决"-->
-                        <!--allenyr:textSize="15sp"-->
-                        <!--allenyr:backgroundColor="@color/colorRed"-->
-                        <!--allenyr:enable="false"-->
-                        <!--allenyr:layout_height="50dp"-->
-                        <!--allenyr:layout_width="50dp"-->
-                        <!--/>-->
                     <TextView
                         android:id="@+id/iv_reply_activity_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/shape_circle_bg"
+                        android:background="@drawable/shape_circle_red_bg"
+                        android:textStyle="bold"
                         android:text="未解决"
-                        android:textSize="17dp"
+                        android:textSize="13dp"
                         android:gravity="center"
                         android:textColor="@color/colorWhite"/>
 
