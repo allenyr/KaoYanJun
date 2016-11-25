@@ -7,8 +7,8 @@ android {
         applicationId "com.sharon.allen.a18_sharon"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 29
-        versionName "2.3.0"
+        versionCode 31
+        versionName "2.3.1"
         useLibrary 'org.apache.http.legacy'
         //极光推送支持
         ndk {
@@ -80,5 +80,5 @@ dependencies {
     //rxgalleryfinal
     compile 'cn.finalteam.rxgalleryfinal:library:0.0.3'
     //
-    compile 'com.github.chrisbanes:PhotoView:1.3.1'
+//    compile 'com.github.chrisbanes:PhotoView:1.3.1'
 }

@@ -87,7 +87,8 @@ public class InformationAdapter extends RecyclerView.Adapter {
             viewHolder.iv_file_share.setVisibility(View.GONE);
         } else {
             viewHolder.iv_file_ico.setBackgroundResource(R.drawable.ico_file);
-            viewHolder.iv_file_share.setVisibility(View.VISIBLE);
+            viewHolder.iv_file_share.setVisibility(View.GONE);
+//            viewHolder.iv_file_share.setVisibility(View.VISIBLE);
         }
 
         viewHolder.iv_file_share.setOnClickListener(new View.OnClickListener() {

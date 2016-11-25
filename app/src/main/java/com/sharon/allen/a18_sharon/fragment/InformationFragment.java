@@ -402,6 +402,7 @@ public class InformationFragment extends BaseFragment {
                 dialog.dismiss();
                 }
             });
+        builder.setCancelable(false);
         builder.create().show();
     }
 

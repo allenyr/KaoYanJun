@@ -78,6 +78,7 @@ public class RegisterActivity extends BaseActivity {
                 }
             }else if(msg.what == HANDLER_UPDATE_PASSWORD){
                 ToastUtils.Toast(getApplicationContext(), (String) msg.obj);
+                dialog.dismiss();
                 if("修改成功".equals((String) msg.obj)){
                     //返回data
                     Intent intent = new Intent();
@@ -190,7 +191,7 @@ public class RegisterActivity extends BaseActivity {
         //步骤3：注册回调监听接口
         SMSSDK.registerEventHandler(eventHandler);
 
-        mContext = getApplicationContext();
+        mContext = RegisterActivity.this;
         myOkHttp = new MyOkHttp();
         Bundle bundle = this.getIntent().getExtras();
         mWhat = bundle.getInt("what");
@@ -277,10 +278,6 @@ public class RegisterActivity extends BaseActivity {
         list.add(userDataManager.getPhone());
         myOkHttp.okhttpGet(handler,HANDLER_REGISTER, Constant.Server.GET_PATH,list,2);
 
-//        MyHttp.creatHttpRequest(handler,HANDLER_REGISTER,
-//                userDataManager.getPassword(),
-//                userDataManager.getHeadUrl(),
-//                userDataManager.getPhone(),2);
     }
 
     //修改密码
@@ -289,7 +286,6 @@ public class RegisterActivity extends BaseActivity {
         list.add(userDataManager.getPhone());
         list.add(userDataManager.getPassword());
         myOkHttp.okhttpGet(handler,HANDLER_UPDATE_PASSWORD, Constant.Server.GET_PATH,list,22);
-//        MyHttp.creatHttpRequest(handler,HANDLER_UPDATE_PASSWORD,userDataManager.getPhone(),userDataManager.getPassword(),22);
     }
 
     //
@@ -322,6 +318,7 @@ public class RegisterActivity extends BaseActivity {
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_loading, null);
         //    设置我们自己定义的布局文件作为弹出框的Content
         builder.setView(view);
+        builder.setCancelable(false);
         tv_dialog_title = (TextView)view.findViewById(R.id.tv_dialog_title);
         switch (mWhat){
             case 1:
