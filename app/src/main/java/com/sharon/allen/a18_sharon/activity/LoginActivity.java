@@ -101,8 +101,7 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
                     if (jsonData.equals("assign")){
                         LogUtils.i("注册");
                         //下载头像到本地
-                        myOkHttp.downLoadFile(userDataManager.getHeadUrl(),avatarDir,phoneName);
-                        userDataManager.setHeadUrl("/head/"+phoneName);
+                        myOkHttp.downLoadFile(mQQAvatarUrl,avatarDir,phoneName);
                         //注册或者登陆
                         register();
                     }else {
@@ -126,6 +125,7 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
             }
         }
     };
+    private String mQQAvatarUrl;
 
     //ShareSDK_Handle
     @Override
@@ -137,6 +137,7 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
                 ArrayList<String> list = new ArrayList<String>();
                 list.add(userDataManager.getUsername());
                 list.add("");
+                userDataManager.setHeadUrl("/head/"+phoneName);
                 list.add(userDataManager.getHeadUrl());
                 list.add(userDataManager.getPhone());
                 list.add(userDataManager.getSex());
@@ -263,6 +264,7 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
         builder.setView(view);
         TextView tv_dialog_title = (TextView)view.findViewById(R.id.tv_dialog_title);
         tv_dialog_title.setText("正在登录");
+        builder.setCancelable(false);
         dialog = builder.show();
 
     }
@@ -292,7 +294,7 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
         userDataManager.setPhone(platform.getDb().getUserId());
         userDataManager.setSex((String)res.get("gender"));
         userDataManager.setAddress(res.get("province")+" "+res.get("city"));
-        userDataManager.setHeadUrl((String) res.get("figureurl_qq_2"));
+        mQQAvatarUrl = (String) res.get("figureurl_qq_2");
         UIHandler.sendMessage(msg, this);
     }
 
