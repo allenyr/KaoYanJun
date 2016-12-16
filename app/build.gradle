@@ -7,8 +7,8 @@ android {
         applicationId "com.sharon.allen.a18_sharon"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 31
-        versionName "2.3.1"
+        versionCode 32
+        versionName "2.3.2"
         useLibrary 'org.apache.http.legacy'
         //极光推送支持
         ndk {

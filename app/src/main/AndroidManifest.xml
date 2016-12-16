@@ -39,6 +39,7 @@
         android:smallScreens="true" />
 
     <application
+        android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@drawable/ico_logo_ffcc00"
         android:label="考研君"

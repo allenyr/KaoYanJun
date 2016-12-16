@@ -221,26 +221,39 @@ public class CommentActivity extends BaseActivity {
         }
 
         Glide.with(this).load(Constant.Server.PATH + mHeadUrl).into(civ_comment_activity_head);
-
         tv_comment_activity_username.setText(mUserName);
         tv_comment_activity_time.setText(mTime);
         tv_comment_activity_mood.setText(mMood);
 
         // 显示图片
-        fileSuffix = FileUtils.getFileSuffix(mImgUrl);
-        gifName = FileUtils.getNameFromPath(mImgUrl);
-        downloadFileTemp = new File(Environment.getExternalStorageDirectory()+ Constant.SdCard.SAVE_IMAGE_PATH, gifName);
-        if(!downloadFileTemp.exists()) {
-            LogUtils.i("图片不存在");
-            myOkHttp.downLoadFile(Constant.Server.PATH+mImgUrl,Environment.getExternalStorageDirectory()+Constant.SdCard.SAVE_IMAGE_PATH, gifName);
+//        fileSuffix = FileUtils.getFileSuffix(mImgUrl);
+//        gifName = FileUtils.getNameFromPath(mImgUrl);
+//        downloadFileTemp = new File(Environment.getExternalStorageDirectory()+ Constant.SdCard.SAVE_IMAGE_PATH, gifName);
+//        if(!downloadFileTemp.exists()) {
+//            LogUtils.i("图片不存在");
+//            myOkHttp.downLoadFile(Constant.Server.PATH + mImgUrl,Environment.getExternalStorageDirectory()+Constant.SdCard.SAVE_IMAGE_PATH, gifName);
+//            Glide.with(mContext).load(Constant.Server.PATH + mImgUrl).into(iv_comment_activity_img);
+//        }else {
+//            LogUtils.i("图片存在");
+//            if (fileSuffix.equals("gif")){
+//                Glide.with(mContext).load(downloadFileTemp).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_comment_activity_img);
+//            }else {
+//                Glide.with(mContext).load(downloadFileTemp).into(iv_comment_activity_img);
+//            }
+//        }
+        LogUtils.i("mImgUrl="+mImgUrl);
+        if (FileUtils.getFileSuffix(mImgUrl).equals("gif")){
+            Glide.with(mContext)
+                    .load(Constant.Server.PATH + mImgUrl)
+                    .asGif()
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(iv_comment_activity_img);
         }else {
-            LogUtils.i("图片存在");
-            if (fileSuffix.equals("gif")){
-                Glide.with(mContext).load(downloadFileTemp).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_comment_activity_img);
-            }else {
-                Glide.with(mContext).load(downloadFileTemp).into(iv_comment_activity_img);
-            }
+            Glide.with(mContext)
+                    .load(Constant.Server.PATH + mImgUrl)
+                    .into(iv_comment_activity_img);
         }
+//        Glide.with(mContext).load(Constant.Server.PATH + mImgUrl).into(iv_comment_activity_img);
 
         //显示时间
         try {

@@ -524,6 +524,7 @@ public class SplashActivity extends BaseActivity {
             userDataManager.setSigna(user.getSigna());
             userDataManager.setMessagenum(user.getMessagenum());
         }
+        MyJPush.setAlias(mContext,userDataManager.getId()+"");
     }
 
 

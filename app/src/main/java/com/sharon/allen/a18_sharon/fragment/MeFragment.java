@@ -183,7 +183,9 @@ public class MeFragment extends BaseFragment {
 
     //设置徽章
     public void setBadge(){
-        messageRead = userDataManager.getMessagenum() - MySharePreference.getSP(mContext,"message_readed",0);
+//        messageRead = userDataManager.getMessagenum() - MySharePreference.getSP(mContext,"message_readed",0);
+        messageRead = userDataManager.getMessagenum();
+        LogUtils.i(messageRead);
         if(messageRead >0){
             tv_me_readed.setVisibility(View.VISIBLE);
         }else {

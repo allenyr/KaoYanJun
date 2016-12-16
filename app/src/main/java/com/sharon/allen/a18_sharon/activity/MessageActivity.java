@@ -39,6 +39,7 @@ public class MessageActivity extends BaseActivity {
     private MessageAdapter adapter;
     private List<Message> messageList = new ArrayList<>();
     private static final int WHAT_GET_MESSAGE = 1;
+    private static final int WHAT_CLEAR_MESSAGE = 2;
     private UserDataManager userDataManager;
     private TextView tv_titlebar_title;
     private ImageView iv_titlebar_camera;
@@ -55,7 +56,12 @@ public class MessageActivity extends BaseActivity {
                     messageList = (List<Message>) pullJson((String) msg.obj);
                     adapter.refresh(messageList);
                     mPullRefreshLayout.setRefreshing(false);
+                    clearUnreadMessage();
                     break;
+                case WHAT_CLEAR_MESSAGE:
+
+                    break;
+
             }
         }
     };
@@ -126,7 +132,8 @@ public class MessageActivity extends BaseActivity {
             }
         });
         mRecyclerView.setAdapter(adapter);
-        MySharePreference.putSP(mContext,"message_readed",userDataManager.getMessagenum());
+
+//        MySharePreference.putSP(mContext,"message_readed",userDataManager.getMessagenum());
         getMessage();
     }
 
@@ -141,6 +148,13 @@ public class MessageActivity extends BaseActivity {
         }
     }
 
+    private void clearUnreadMessage(){
+        ArrayList<String> list = new ArrayList<String>();
+        list.add(userDataManager.getId()+"");
+        myOkHttp.okhttpGet(handler,WHAT_CLEAR_MESSAGE, Constant.Server.GET_PATH,list,48);
+        userDataManager.setMessagenum(0);
+    }
+
     private void getMessage(){
         ArrayList<String> list = new ArrayList<String>();
         list.add(userDataManager.getId()+"");
@@ -149,7 +163,14 @@ public class MessageActivity extends BaseActivity {
 
     //解析Json数据
     private List pullJson(String jsonData) {
-        Gson gson = new Gson();
-        return gson.fromJson(jsonData, new TypeToken<List<Message>>() {}.getType());
+        if (jsonData!=null&&!jsonData.isEmpty()){
+            try {
+                Gson gson = new Gson();
+                return gson.fromJson(jsonData, new TypeToken<List<Message>>() {}.getType());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

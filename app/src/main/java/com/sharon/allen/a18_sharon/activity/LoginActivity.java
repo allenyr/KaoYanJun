@@ -108,7 +108,6 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
                         jsonData = (String) msg.obj;
                         MySharePreference.putSP(mContext,"personalCache",jsonData);
                         userList = pullJson(jsonData);
-                        LogUtils.i("userList="+userList.toString());
                         saveUserData(userList);
 //                        personInfoSaveToSQLite(jsonData,sqLiteDatabase,mContext);
                         dialog.dismiss();
@@ -385,6 +384,7 @@ public class LoginActivity extends BaseActivity implements Handler.Callback,Plat
             userDataManager.setSigna(user.getSigna());
             userDataManager.setMessagenum(user.getMessagenum());
         }
+        MyJPush.setAlias(mContext,userDataManager.getId()+"");
     }
 
     //JSON数据存储到本机sql

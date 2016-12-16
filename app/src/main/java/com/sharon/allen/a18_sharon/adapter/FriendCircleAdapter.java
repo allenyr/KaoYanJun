@@ -111,32 +111,50 @@ public class FriendCircleAdapter extends RecyclerView.Adapter{
         viewHolder.tv_moments_mood.setText(hotItem.getMood());
 
         //配图
-        downloadImgTemp = new File(Environment.getExternalStorageDirectory()+ Constant.SdCard.SAVE_IMAGE_PATH, FileUtils.getNameFromPath(Constant.Server.PATH+hotItem.getImageurl()));
-        if(!downloadImgTemp.exists()) {
-            LogUtils.i("图片不存在");
-            myOkHttp.downLoadFile(Constant.Server.PATH + hotItem.getImageurl(), Environment.getExternalStorageDirectory() + Constant.SdCard.SAVE_IMAGE_PATH, FileUtils.getNameFromPath(Constant.Server.PATH + hotItem.getImageurl()));
+        //缓存
+//        downloadImgTemp = new File(Environment.getExternalStorageDirectory()+ Constant.SdCard.SAVE_IMAGE_PATH, FileUtils.getNameFromPath(hotItem.getImageurl()));
+//        if(!downloadImgTemp.exists()) {
+//            LogUtils.i("图片不存在");
+//            myOkHttp.downLoadFile(Constant.Server.PATH + hotItem.getImageurl(), Environment.getExternalStorageDirectory() + Constant.SdCard.SAVE_IMAGE_PATH, FileUtils.getNameFromPath(hotItem.getImageurl()));
+//            Glide.with(context).load(Constant.Server.PATH + hotItem.getImageurl()).into(viewHolder.siv_moments_img);
+//        }else {
+//            LogUtils.i("图片存在");
+//            if (FileUtils.getFileSuffix(Constant.Server.PATH+hotItem.getImageurl()).equals("gif")){
+//                Glide.with(context).load(downloadImgTemp).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.siv_moments_img);
+//            }else {
+//                Glide.with(context).load(downloadImgTemp).into(viewHolder.siv_moments_img);
+//            }
+//        }
+
+        if (FileUtils.getFileSuffix(hotItem.getHeadurl()).equals("gif")){
+            Glide.with(context)
+                    .load(Constant.Server.PATH + hotItem.getImageurl())
+                    .asGif()
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(viewHolder.siv_moments_img);
         }else {
-            LogUtils.i("图片存在");
-            if (FileUtils.getFileSuffix(Constant.Server.PATH+hotItem.getImageurl()).equals("gif")){
-                Glide.with(context).load(downloadImgTemp).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.siv_moments_img);
-            }else {
-                Glide.with(context).load(Constant.Server.PATH + hotItem.getImageurl()).into(viewHolder.siv_moments_img);
-            }
+            Glide.with(context)
+                    .load(Constant.Server.PATH + hotItem.getImageurl())
+                    .into(viewHolder.siv_moments_img);
         }
 
+
         //头像
-        downloadImgTemp = new File(Environment.getExternalStorageDirectory()+ Constant.SdCard.SAVE_AVATAR_PATH, FileUtils.getNameFromPath(Constant.Server.PATH+hotItem.getHeadurl()));
-        if(!downloadImgTemp.exists()) {
-            LogUtils.i("图片不存在");
-            myOkHttp.downLoadFile(Constant.Server.PATH + hotItem.getHeadurl(), Environment.getExternalStorageDirectory() + Constant.SdCard.SAVE_AVATAR_PATH, FileUtils.getNameFromPath(Constant.Server.PATH + hotItem.getHeadurl()));
-        }else {
-            LogUtils.i("图片存在");
-            if (FileUtils.getFileSuffix(Constant.Server.PATH+hotItem.getHeadurl()).equals("gif")){
-                Glide.with(context).load(downloadImgTemp).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.siv_moments_img);
-            }else {
-                Glide.with(context).load(Constant.Server.PATH + hotItem.getHeadurl()).into(viewHolder.civ_moments_head);
-            }
-        }
+        //缓存
+//        downloadImgTemp = new File(Environment.getExternalStorageDirectory()+ Constant.SdCard.SAVE_AVATAR_PATH, FileUtils.getNameFromPath(hotItem.getHeadurl()));
+//        if(!downloadImgTemp.exists()) {
+//            LogUtils.i("图片不存在");
+//            myOkHttp.downLoadFile(Constant.Server.PATH + hotItem.getHeadurl(), Environment.getExternalStorageDirectory() + Constant.SdCard.SAVE_AVATAR_PATH, FileUtils.getNameFromPath(hotItem.getHeadurl()));
+//            Glide.with(context).load(Constant.Server.PATH + hotItem.getHeadurl()).into(viewHolder.civ_moments_head);
+//        }else {
+//            LogUtils.i("图片存在");
+//            if (FileUtils.getFileSuffix(Constant.Server.PATH+hotItem.getHeadurl()).equals("gif")){
+//                Glide.with(context).load(downloadImgTemp).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.civ_moments_head);
+//            }else {
+//                Glide.with(context).load(downloadImgTemp).into(viewHolder.civ_moments_head);
+//            }
+//        }
+        Glide.with(context).load(Constant.Server.PATH + hotItem.getHeadurl()).into(viewHolder.civ_moments_head);
 
         viewHolder.tv_moments_thank.setText(hotItem.getThank()+"");
         viewHolder.tv_moments_username.setText(hotItem.getUsername());
