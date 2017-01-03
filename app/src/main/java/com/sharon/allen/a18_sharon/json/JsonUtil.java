@@ -19,5 +19,4 @@ public class JsonUtil {
 		ArrayList<?> list=gson.fromJson(jsondata, listType);
 		return list;
 	}
-
 }
